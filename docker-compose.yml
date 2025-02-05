@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  janus:
+    build: .
+    container_name: janus-gateway
+    ports:
+      - "8088:8088"
+      - "8188:8188"
+      - "10000-30000:10000-30000/udp"
+    volumes:
+      - ./janus-config:/opt/janus/etc/janus   # Externalized configuration files
+      - ./janus-data:/opt/janus/var            # Persistent data (e.g., logs)
+    environment:
+      - JANUS_DEBUG=1
+      - JANUS_LOG_LEVEL=debug
+    networks:
+      - janus-net
+
+networks:
+  janus-net:
+    driver: bridge
