@@ -1,0 +1,14 @@
+{
+  "general": {
+    "configs": "/opt/janus/etc/janus",
+    "plugins_folder": "/opt/janus/lib/janus/plugins",
+    "transports": {
+      "janus.transport.http": "janus.transport.http.jcfg",
+      "janus.transport.websockets": "janus.transport.websockets.jcfg"
+    }
+  },
+  "nat": {
+    "stun_server": "stun.l.google.com",
+    "stun_port": 19302
+  }
+}
