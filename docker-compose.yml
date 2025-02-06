@@ -5,20 +5,16 @@ services:
     build: .
     container_name: janus-gateway
     ports:
-      - "8088:8088"     # HTTP
-      - "8188:8188"     # WebSockets
-      - "7088:7088"     # Admin/monitor
-      - "20000-20010:20000-20010/udp"  # RTP/ICE ports
+      - "8088:8088"     # HTTP API (Janus REST)
+      - "8188:8188"     # WebSockets API
+      - "7088:7088"     # Admin/monitor API (optional)
+      - "20000-20010:20000-20010/udp"  # RTP/ICE ports for WebRTC media
     volumes:
-      - ./janus-config:/opt/janus/etc/janus
-      - ./janus-data:/opt/janus/var
-      - ./recordings:/opt/recordings
-      - ./plugins:/opt/janus/lib/janus/plugins  # Mount custom plugins (if needed)
+      - ./janus-config:/opt/janus/etc/janus  # Mount config files
+      - ./janus-data:/opt/janus/var  # Persistent data (e.g., recordings metadata)
+      - ./recordings:/opt/recordings  # Media recordings (if using RecordPlay plugin)
     environment:
-      - TZ=Asia/Dhaka
-      - JANUS_DEBUG=1
-      - JANUS_LOG_LEVEL=debug
-    network_mode: "host"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - TZ=Asia/Dhaka  # Timezone
+      - JANUS_DEBUG=1  # Enable debug mode
+      - JANUS_LOG_LEVEL=debug  # Verbose logging
     restart: always
